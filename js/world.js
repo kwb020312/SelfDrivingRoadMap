@@ -1,5 +1,5 @@
 class World {
-  constructor(graph, roadWidth = 100, roadRoundness = 3) {
+  constructor(graph, roadWidth = 100, roadRoundness = 10) {
     this.graph = graph;
     this.roadWidth = roadWidth;
     this.roadRoundness = roadRoundness;

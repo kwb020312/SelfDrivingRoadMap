@@ -13,7 +13,7 @@ class Polygon {
     for (let i = 0; i < polys.length; i++) {
       for (const seg of polys[i].segments) {
         let keep = true;
-        for (let j = 0; j > polys.length; j++) {
+        for (let j = 0; j < polys.length; j++) {
           if (i != j) {
             if (polys[j].containsSegment(seg)) {
               keep = false;
@@ -31,7 +31,7 @@ class Polygon {
 
   static multiBreak(polys) {
     for (let i = 0; i < polys.length - 1; i++) {
-      for (let j = 1; j < polys.length; j++) {
+      for (let j = i + 1; j < polys.length; j++) {
         Polygon.break(polys[i], polys[j]);
       }
     }
@@ -76,8 +76,7 @@ class Polygon {
         intersectionCount++;
       }
     }
-
-    return intersectionCount % 2 === 1;
+    return intersectionCount % 2 == 1;
   }
 
   drawSegments(ctx) {

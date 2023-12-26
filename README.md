@@ -24,3 +24,19 @@ function distance(p1, p2) {
 ```
 
 내장 함수인 `Math.hypot()`을 사용하였음
+
+---
+
+### 🎞Road
+
+Graph의 Segment 중 Intersection된 Segment는 그려져선 안된다. 그림으로 보자.
+
+![image](https://github.com/kwb020312/SelfDrivingRoadMap/assets/46777310/cca573f1-2ac0-41e8-be9e-359c80457655)
+
+즉 푸른 배경의 Polygon내부에 위치한 Segment를 제거하기 위해 다음과 같은 알고리즘을 사용하였다.
+
+![image](https://github.com/kwb020312/SelfDrivingRoadMap/assets/46777310/c523e679-c7b8-4a05-830d-393bf246eb9c)
+
+특정 Point에서 Polygon을 통과하는 직선을 그렸을 때, Outline에 짝수 회 걸치면 외부에 있음으로 판단하고, 홀수 회 걸치면 내부에 있음으로 판단한다.
+
+![image](https://github.com/kwb020312/SelfDrivingRoadMap/assets/46777310/5623c112-ce7a-4f71-a6e9-25fa48b192f2)

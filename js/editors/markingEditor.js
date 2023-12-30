@@ -4,7 +4,6 @@ class MarkingEditor {
     this.world = world;
 
     this.canvas = viewport.canvas;
-    console.log(viewport.canvas);
     this.ctx = this.canvas.getContext("2d");
 
     this.mouse = null;

@@ -70,6 +70,12 @@ a=10, b=20, t=0.5 라면, 15가 반환되는 형식이며 애니메이션, 그�
 
 ![image](https://github.com/kwb020312/SelfDrivingRoadMap/assets/46777310/093aa731-9f16-42f7-beba-e813724fb59a)
 
+---
 
+### 🔱Marks
+
+정지 마크
+
+![image](https://github.com/kwb020312/SelfDrivingRoadMap/assets/46777310/c9a6e3bb-c1ab-464e-a9c0-7ef8d0c3f920)
 
 

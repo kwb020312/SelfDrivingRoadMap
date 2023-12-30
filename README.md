@@ -62,6 +62,7 @@ a=10, b=20, t=0.5 라면, 15가 반환되는 형식이며 애니메이션, 그�
 사용자 시점에 따른 거리에 맞게 비율을 늘리거나 줄이게 되는 것으로 3D 처럼 보이게 만드는 것
 
 ![image](https://github.com/kwb020312/SelfDrivingRoadMap/assets/46777310/5dcd7d17-fd0e-4ec3-bff7-960695d1e254)
+![image](https://github.com/kwb020312/SelfDrivingRoadMap/assets/46777310/738120cc-021a-47d2-a805-78ed3ae1e4a3)
 
 ---
 
@@ -70,6 +71,5 @@ a=10, b=20, t=0.5 라면, 15가 반환되는 형식이며 애니메이션, 그�
 ![image](https://github.com/kwb020312/SelfDrivingRoadMap/assets/46777310/093aa731-9f16-42f7-beba-e813724fb59a)
 
 
-![image](https://github.com/kwb020312/SelfDrivingRoadMap/assets/46777310/738120cc-021a-47d2-a805-78ed3ae1e4a3)
 
 

@@ -7,11 +7,14 @@
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <h1>세계 생성하기</h1>
+    <h1>도로 생성하기</h1>
     <canvas id="myCanvas"></canvas>
     <div id="controls">
       <button onclick="dispose()">🗑 삭제하기</button>
       <button onclick="save()">💾 저장하기</button>
+      &nbsp;
+      <button id="graphBtn" onclick="setMode('graph')">🌐</button>
+      <button id="stopBtn" onclick="setMode('stop')">🛑</button>
     </div>
 
     <script src="js/world.js"></script>
@@ -39,6 +42,9 @@
       const graphEditor = new GraphEditor(viewport, graph);
 
       let oldGraphHash = graph.hash();
+
+      setMode("graph");
+
       animate();
 
       function animate() {
@@ -60,6 +66,31 @@
 
       function save() {
         localStorage.setItem("graph", JSON.stringify(graph));
+      }
+
+      function setMode(mode) {
+        dissableEditors();
+        switch (mode) {
+          case "graph":
+            graphBtn.style.backgroundColor = "white";
+            graphBtn.style.filter = "";
+            graphEditor.enable();
+            break;
+          case "stop":
+            stopBtn.style.backgroundColor = "white";
+            stopBtn.style.filter = "";
+            break;
+          default:
+            break;
+        }
+      }
+
+      function dissableEditors() {
+        graphBtn.style.backgroundColor = "gray";
+        graphBtn.style.filter = "grayscale(100%)";
+        graphEditor.disable();
+        stopBtn.style.backgroundColor = "gray";
+        stopBtn.style.filter = "grayscale(100%)";
       }
     </script>
   </body>

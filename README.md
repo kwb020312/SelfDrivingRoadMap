@@ -86,3 +86,118 @@ ETC
 
 ![image](https://github.com/kwb020312/SelfDrivingRoadMap/assets/46777310/5211de6f-24f8-4314-879e-ed0dd9eebfc9)
 
+---
+
+### 😱AI
+
+라이브러리를 사용하지 않고 다음과 같은 JS 코드를 사용하였다.
+
+신경망(Neural Network)을 구현한 것이며
+신경망은 머신러닝의 핵심 구성 요소로, 입력, 가중치, 편향 등을 처리하여 출력을 생성한다.
+이 코드에서는 두 개의 클래스, `NeuralNetwork`와 `Level`이 정의되어 있음
+
+`NeuralNetwork` 클래스는 신경망 전체를 표현하며, 각각의 `Level` 인스턴스를 포함 `Level`은 신경망의 한 층을 나타내며, 각 층은 입력 뉴런, 출력 뉴런, 가중치, 편향을 갖는다.
+
+`NeuralNetwork` 클래스의 주요 메소드는 다음과 같음
+- `constructor(neuronCounts)`: 신경망의 각 층에 대한 뉴런 수를 인자로 받아 신경망을 생성 이때 각 층은 `Level` 인스턴스로 생성
+- `feedForward(givenInputs, network)`: 주어진 입력에 대해 신경망을 통해 출력을 생성하는 과정을 수행 이 과정은 각 층마다 입력을 받아 출력을 생성하고, 그 출력을 다음 층의 입력으로 사용하는 방식으로 진행
+- `mutate(network, amount=1)`: 신경망의 가중치와 편향을 무작위로 변형하는 메소드 이는 학습 과정에서 신경망의 성능을 향상시키는 데 사용
+  
+`Level` 클래스의 주요 메소드
+- `constructor(inputCount, outputCount)`: 각 층의 입력 뉴런 수와 출력 뉴런 수를 인자로 받아 층을 생성 가중치와 편향은 무작위로 초기화
+- `#randomize(level)`: 각 층의 가중치와 편향을 무작위로 설정하는 메소드
+- `feedForward(givenInputs, level)`: 주어진 입력에 대해 층을 통해 출력을 생성하는 과정을 수행 이 과정은 각 입력 뉴런과 해당 가중치를 곱한 값의 합이 편향보다 크면 출력을 1로, 그렇지 않으면 0으로 설정
+
+자동차의 센서 입력을 신경망의 입력으로 사용하고, 신경망의 출력을 자동차의 조향 및 가속 조작으로 사용 `mutate` 메소드를 사용해 신경망을 지속적으로 학습시켜 자동차의 주행 성능을 향상시킴
+
+```javascript
+class NeuralNetwork{
+    constructor(neuronCounts){
+        this.levels=[];
+        for(let i=0;i<neuronCounts.length-1;i++){
+            this.levels.push(new Level(
+                neuronCounts[i],neuronCounts[i+1]
+            ));
+        }
+    }
+
+    static feedForward(givenInputs,network){
+        let outputs=Level.feedForward(
+            givenInputs,network.levels[0]);
+        for(let i=1;i<network.levels.length;i++){
+            outputs=Level.feedForward(
+                outputs,network.levels[i]);
+        }
+        return outputs;
+    }
+
+    static mutate(network,amount=1){
+        network.levels.forEach(level => {
+            for(let i=0;i<level.biases.length;i++){
+                level.biases[i]=lerp(
+                    level.biases[i],
+                    Math.random()*2-1,
+                    amount
+                )
+            }
+            for(let i=0;i<level.weights.length;i++){
+                for(let j=0;j<level.weights[i].length;j++){
+                    level.weights[i][j]=lerp(
+                        level.weights[i][j],
+                        Math.random()*2-1,
+                        amount
+                    )
+                }
+            }
+        });
+    }
+}
+
+class Level{
+    constructor(inputCount,outputCount){
+        this.inputs=new Array(inputCount);
+        this.outputs=new Array(outputCount);
+        this.biases=new Array(outputCount);
+
+        this.weights=[];
+        for(let i=0;i<inputCount;i++){
+            this.weights[i]=new Array(outputCount);
+        }
+
+        Level.#randomize(this);
+    }
+
+    static #randomize(level){
+        for(let i=0;i<level.inputs.length;i++){
+            for(let j=0;j<level.outputs.length;j++){
+                level.weights[i][j]=Math.random()*2-1;
+            }
+        }
+
+        for(let i=0;i<level.biases.length;i++){
+            level.biases[i]=Math.random()*2-1;
+        }
+    }
+
+    static feedForward(givenInputs,level){
+        for(let i=0;i<level.inputs.length;i++){
+            level.inputs[i]=givenInputs[i];
+        }
+
+        for(let i=0;i<level.outputs.length;i++){
+            let sum=0
+            for(let j=0;j<level.inputs.length;j++){
+                sum+=level.inputs[j]*level.weights[j][i];
+            }
+
+            if(sum>level.biases[i]){
+                level.outputs[i]=1;
+            }else{
+                level.outputs[i]=0;
+            } 
+        }
+
+        return level.outputs;
+    }
+}
+```

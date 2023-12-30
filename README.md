@@ -78,4 +78,6 @@ a=10, b=20, t=0.5 라면, 15가 반환되는 형식이며 애니메이션, 그�
 
 ![image](https://github.com/kwb020312/SelfDrivingRoadMap/assets/46777310/c9a6e3bb-c1ab-464e-a9c0-7ef8d0c3f920)
 
+횡단보도
 
+![image](https://github.com/kwb020312/SelfDrivingRoadMap/assets/46777310/af21690b-0597-4ccf-8e7d-1f1696ebb0dc)

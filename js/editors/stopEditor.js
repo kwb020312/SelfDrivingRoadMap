@@ -4,10 +4,13 @@ class StopEditor {
     this.world = world;
 
     this.canvas = viewport.canvas;
+    console.log(viewport.canvas);
     this.ctx = this.canvas.getContext("2d");
 
     this.mouse = null;
     this.intent = null;
+
+    this.markings = world.markings;
   }
 
   enable() {
@@ -37,18 +40,18 @@ class StopEditor {
     this.mouse = this.viewport.getMouse(evt, true);
     const seg = getNearestSegment(
       this.mouse,
-      this.world.graph.segments,
+      this.world.laneGuides,
       10 * this.viewport.zoom
     );
 
     if (seg) {
       const proj = seg.projectPoint(this.mouse);
       if (proj.offset >= 0 && proj.offset <= 1) {
-        this.intent = new StopEditor(
+        this.intent = new Segment(
           proj.point,
           seg.directionVector(),
-          world.roadWidth,
-          this.world.roadWidth / 2
+          world.roadWidth / 2,
+          world.roadWidth / 2
         );
       } else {
         this.intent = null;
@@ -58,7 +61,23 @@ class StopEditor {
     }
   }
 
-  #handleMouseDown(evt) {}
+  #handleMouseDown(evt) {
+    if (evt.button === 0) {
+      if (this.intent) {
+        this.markings.push(this.intent);
+        this.intent = null;
+      }
+    }
+    if (evt.button == 2) {
+      for (let i = 0; i < this.markings.length; i++) {
+        const poly = this.markings[i].poly;
+        if (poly.containsPoint(this.mouse)) {
+          this.markings.splice(i, 1);
+          return;
+        }
+      }
+    }
+  }
 
   display() {
     if (this.intent) {
